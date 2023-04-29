@@ -1,0 +1,195 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* VARIABLER */
+:root {
+    --font-sanserif: 'Inter', sans-serif;
+    --global-margin: 20px;
+    --global-border-radius: 5px;
+
+    --color-primary: #20CC65;
+    --color-secondary: #989898;
+    --color-danger: #CB5151;
+    --color-bg: #111111;
+    --color-text: #FFFFFF;
+    /* highlight växlas mellan primary och danger */
+
+    --color-01dp: #1A1A1A;
+    --color-06dp: #282828;
+    --color-12dp: #444444;
+    --color-16dp: #5A5A5A;
+    --color-24dp: #989898;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sanserif);
+
+    height: 100vh;
+    /* max-width: 1500px; */
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 300px 750px;
+    grid-template-rows: 1fr 90px;
+    grid-template-areas: 
+    "side patio restaurang"
+    "bar bar bar";
+}
+
+.sidebar {
+    grid-area: side;
+    background-color: var(--color-06dp);
+
+    padding: var(--global-margin);
+}
+
+.patio {
+    grid-area: patio;
+    padding: var(--global-margin);
+    position: relative;
+}
+
+.restaurant {
+    grid-area: restaurang;
+    background-color: var(--color-01dp);
+    padding: var(--global-margin);
+    position: relative;
+    z-index: -10;
+}
+
+.actionbar {
+    grid-area: bar;
+    background-color: var(--color-12dp);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--global-margin);
+}
+
+/* TEXT */
+h1 {
+    font-size: 4rem;
+    margin: 10px 0;
+}
+
+h1 strong {
+    display: block;
+    font-size: 2.5rem;
+    color: var(--color-24dp);
+}
+
+h2 {
+    font-size: 3rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+/* KNAPPAR */
+.btn {
+    width: 160px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: var(--global-border-radius);
+}
+
+.btn.small {
+    width: 125px;
+    height: 40px;
+}
+
+.action {
+    background-color: var(--color-primary);
+    color: var(--color-bg);
+}
+
+.danger {
+    background-color: var(--color-danger);
+    color: var(--color-text);
+}
+
+.btn:active, .action:active, .danger:active {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+/* BORD */
+.table {
+    background-color: var(--color-12dp);
+    font-size: 3rem;
+    font-weight: bold;
+    border-radius: var(--global-border-radius);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.restaurant .table.four-seater {
+    width: 100px;
+    height: 140px;
+    margin: 0 20px; /* För stolarna */
+}
+
+.restaurant .table.four-seater::before {
+    content: url(./img/four_seater1.svg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%);
+    z-index: -1;
+}
+
+.restaurant .table.two-seater {
+    width: 70px;
+    height: 100px;
+    margin: 20px 0;
+}
+
+.restaurant .table.two-seater::before {
+    content: url(./img/two_seater.svg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%);
+    z-index: -1;
+}
+
+.restaurant .table.six-seater {
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+    margin: 30px;
+}
+
+.restaurant .table.six-seater::before {
+    content: url(./img/six_seater.svg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%);
+    z-index: -1;
+}
+
+.patio .table.four-seater {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
