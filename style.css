@@ -56,10 +56,10 @@ body {
 
 .restaurant {
     grid-area: restaurang;
-    background-color: var(--color-01dp);
+    /* background-color: var(--color-01dp); */
     padding: var(--global-margin);
     position: relative;
-    z-index: -10;
+    /* z-index: -2; */
 }
 
 .actionbar {
@@ -142,6 +142,19 @@ h3 {
     position: relative;
 }
 
+.table:focus {
+    border: solid 5px var(--color-primary);
+}
+
+.table.booked {
+    background-color: var(--color-bg);
+    border: dashed 5px var(--color-16dp);
+}
+
+.table.booked:focus {
+    border: solid 5px var(--color-danger);
+}
+
 .restaurant .table.four-seater {
     width: 100px;
     height: 140px;
@@ -160,7 +173,7 @@ h3 {
 .restaurant .table.two-seater {
     width: 70px;
     height: 100px;
-    margin: 20px 0;
+    margin: 25px 0;
 }
 
 .restaurant .table.two-seater::before {
@@ -176,7 +189,7 @@ h3 {
     width: 155px;
     height: 155px;
     border-radius: 50%;
-    margin: 30px;
+    margin: 35px;
 }
 
 .restaurant .table.six-seater::before {
@@ -192,4 +205,13 @@ h3 {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+}
+
+.patio .table.four-seater {
+    content: url(./img/four_seater2.svg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%);
+    z-index: -1;
 }
