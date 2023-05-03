@@ -11,9 +11,24 @@
 
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
-    <title>Document</title>
+    <title>Restaurangbokning</title>
 </head>
 <body>
+    <div class="backdrop">
+        <div id="modal">
+            <form>
+                <h3>Boka bord</h3>
+                <label for="namn">Ange sällskapets namn</label>
+                <input type="text" name="namn" id="namn">
+                <label for="people">Ange antal personer</label>
+                <input type="number" name="people" id="people">
+                <div class="buttons">
+                    <button class="btn close-modal">Avbryt</button>
+                    <button class="btn action submit-btn">Boka</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="sidebar">
         <h1>
             Restaurang
@@ -21,28 +36,64 @@
         </h1>
         <div class="info">
             <h3>Info</h3>
+            <ul>
+                <li>Om alla bord är bokade, kan sällskap läggas till i kölistan</li>
+                <li>Vid inbokning av sällskap från kölistan, kom ihåg att ta bort sällskapet från kölisan</li>
+                <li>Ta bort ett sällskap från kölistan genom att trycka och hålla in med fingret</li>
+            </ul>
+            <div class="unbooked">
+                <div></div>
+                <p>Obokat</p>
+            </div>
+            <div class="booked">
+                <div></div>
+                <p>Bokat</p>
+            </div>
         </div>
         <div class="queue">
-            <h3>Kölista</h3>
+            <div class="queue-header">
+                <h3>Kölista</h3>
+                <button class="btn" id="queue-btn">Lägg till</button> 
+            </div>
+            <div class="queue-items">
+                <!-- <div class="queue-item">
+                    <p>#1</p>
+                    <p>Lorem ipsum gänget</p>
+                    <p>2 personer</p>
+                </div> -->
+            </div>
         </div>
     </div>
     <div class="patio">
         <h2>Patio</h2>
         <div class="container">
-            <div tabindex="0" class="table four-seater">1</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">1</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">2</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">3</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">4</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">5</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">6</div>
         </div>
     </div>
     <div class="restaurant">
         <h2>Restaurang</h2>
         <div class="container">
-            <div tabindex="0" class="table four-seater">7</div>
-            <div tabindex="0" class="table two-seater">11</div>
-            <div tabindex="0" class="table six-seater">13</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">7</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">8</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">9</div>
+            <div tabindex="0" class="table four-seater" data-seats="4">10</div>
+            <div tabindex="0" class="table two-seater" data-seats="2">11</div>
+            <div tabindex="0" class="table two-seater" data-seats="2">12</div>
+            <div tabindex="0" class="table six-seater" data-seats="6">13</div>
+            <div tabindex="0" class="table two-seater" data-seats="2">14</div>
+            <div tabindex="0" class="table two-seater" data-seats="2">15</div>
+            <div tabindex="0" class="table two-seater" data-seats="2">16</div>
         </div>
     </div>
     <div class="actionbar">
-        <button class="btn">Avbryt</button>
-        <button class="btn action">Boka</button>
+        <!-- <p class="instruction">Tryck på ett bord för att boka/avboka</p> -->
+        <button class="btn" id="avbryt">Avbryt</button>
+        <button class="btn action" id="boka">Boka</button>
     </div>
 </body>
 </html>
