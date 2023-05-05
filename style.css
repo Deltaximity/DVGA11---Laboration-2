@@ -111,6 +111,7 @@ body {
 
 .queue-items::-webkit-scrollbar-thumb {
     background-color: var(--color-12dp);
+    border-left: solid 3px var(--color-06dp);
     border-right: solid 3px var(--color-06dp);
     border-radius: 10px;
 }
