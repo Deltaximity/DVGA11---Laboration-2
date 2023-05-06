@@ -7,8 +7,6 @@ let modalHeader = document.querySelector('#modal h3');
 
 // knappar
 let queueBtn = document.querySelector('#queue-btn');
-let bokaBtn = document.querySelector('#boka');
-let avbrytBtn = document.querySelector('#avbryt');
 
 // modal knappar
 let closeModalBtn = document.querySelector('.close-modal');
@@ -31,17 +29,47 @@ let queueArray = [];
 tables.forEach(table => {
     table.addEventListener('click', (e) => {
         e.target.focus();
+        selectedTable = e.target.textContent.split(' ').shift();
+        showActionBar(e.target.classList.contains('booked'));
     });
-    // table.addEventListener('focus', (e) => {
-    //     selectedTable = e.target.textContent;
-    //     actionbar.innerHTML = "";
-    //     actionbar.insertAdjacentHTML('beforeend', '<button class="btn" id="avbryt">Avbryt</button><button class="btn action" id="boka">Boka</button>');
-    // });
-    // table.addEventListener("blur", () => {
-    //     actionbar.innerHTML = "";
-    //     actionbar.insertAdjacentHTML('beforeend', '<p class="instruction">Tryck på ett bord för att boka/avboka</p>')
-    // });
 });
+
+function showActionBar(booked) {
+    actionbar.innerHTML = "";
+    let avbrytBtn = document.createElement('div');
+    let avbrytTextNode = document.createTextNode('Avbryt');
+    avbrytBtn.classList.add('btn');
+    avbrytBtn.appendChild(avbrytTextNode);
+    actionbar.appendChild(avbrytBtn);
+    avbrytBtn.addEventListener('click', () => {
+        actionbar.innerHTML = "";
+        actionbar.insertAdjacentHTML('beforeend', '<p class="instruction">Tryck på ett bord för att boka/avboka</p>');
+    });
+
+    if (booked) {
+        let avbokaBtn = document.createElement('div');
+        let avbokaTextNode = document.createTextNode('Avboka');
+        avbokaBtn.classList.add('btn', 'danger');
+        avbokaBtn.appendChild(avbokaTextNode);
+        actionbar.appendChild(avbokaBtn);
+        avbokaBtn.addEventListener('click', () => {
+            // kör kod för avbokning av bord
+            console.log("avboka clicked!");
+        });
+    } else {
+        let bokaBtn = document.createElement('div');
+        let bokaTextNode = document.createTextNode('Boka');
+        bokaBtn.classList.add('btn', 'action');
+        bokaBtn.appendChild(bokaTextNode);
+        actionbar.appendChild(bokaBtn);
+        bokaBtn.addEventListener('click', () => {
+            modal.style.display = "block";
+            queueModal = false;
+            modalHeader.textContent = "Boka bord";
+            submitModalBtn.textContent = "Boka";
+        });
+    }
+}
 
 // MODAL TRIGGER
 queueBtn.addEventListener('click', () => {
@@ -49,13 +77,6 @@ queueBtn.addEventListener('click', () => {
     queueModal = true;
     modalHeader.textContent = "Lägg till i kö";
     submitModalBtn.textContent = "Lägg till";
-})
-
-bokaBtn.addEventListener('click', () => {
-    modal.style.display = "block";
-    queueModal = false;
-    modalHeader.textContent = "Boka bord";
-    submitModalBtn.textContent = "Boka";
 });
 
 // MODAL ACTIONS

@@ -45,6 +45,8 @@ body {
     grid-area: side;
     background-color: var(--color-06dp);
 
+    display: flex;
+    flex-direction: column;
     padding: var(--global-margin);
 }
 
@@ -84,7 +86,7 @@ body {
 }
 
 .booked > div {
-    background-color: var(--color-bg) !important;
+    background-color: var(--color-01dp) !important;
     border: 5px dashed var(--color-24dp);
 }
 
@@ -101,7 +103,7 @@ body {
 
 .queue-items {
     overflow-y: scroll;
-    max-height: 350px;
+    height: 300px;
 }
 
 .queue-items::-webkit-scrollbar {
@@ -199,6 +201,8 @@ h3 {
     text-transform: uppercase;
     border: none;
     border-radius: var(--global-border-radius);
+    background-color: var(--color-secondary);
+    color: var(--color-bg);
 }
 
 .btn.small {
@@ -221,6 +225,90 @@ h3 {
     color: var(--color-text);
 }
 
+/* TOOLTIP */
+.table span {
+    display: none;
+    position: absolute;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 50;
+
+    background-color: var(--color-16dp);
+    color: var(--color-text);
+    width: 260px;
+    padding: var(--global-margin);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.table span div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.table:focus span {
+    display: flex;
+}
+
+.table span.right {
+    right: -20px;
+    top: 50%;
+    transform: translate(100%, -50%);
+}
+
+.table span.left {
+    left: -20px;
+    top: 50%;
+    transform: translate(-100%, -50%);
+}
+
+.table span.top {
+    left: 50%;
+    top: -20px;
+    transform: translate(-50%, -100%);
+}
+
+.table span::before {
+    content: '';
+    position: absolute;
+}
+
+.table span.right::before {
+    top: 50%;
+    left: -15px;
+    transform: translate(0, -50%);
+    border-style: solid;
+    border-width: 10px 15px 10px 0;
+    border-color: transparent var(--color-16dp) transparent transparent;
+}
+
+.table span.left::before {
+    top: 50%;
+    right: -15px;
+    transform: translate(0, -50%);
+    border-style: solid;
+    border-width: 10px 0 10px 15px;
+    border-color: transparent transparent transparent var(--color-16dp);
+}
+
+.table span.top::before {
+    bottom: -15px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-style: solid;
+    border-width: 15px 10px 0 10px;
+    border-color: var(--color-16dp) transparent transparent transparent;
+}
+
+.table span .status {
+    flex-basis: 100%;
+    text-align: center;
+}
+
 /* BORD */
 .table {
     background-color: var(--color-12dp);
@@ -241,6 +329,7 @@ h3 {
 .table.booked {
     background-color: var(--color-bg);
     border: dashed 5px var(--color-16dp);
+    color: var(--color-16dp);
 }
 
 .table.booked:focus {
