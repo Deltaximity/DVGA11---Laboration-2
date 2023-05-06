@@ -1,9 +1,16 @@
+/** 
+ * DVGA11 - Laboration 2
+ * Hasan Ali
+ * Daniel de Bruin
+*/
+
 let tables = document.querySelectorAll('.table');
 let actionbar = document.querySelector('.actionbar');
 
 // modal
 let modal = document.querySelector('.backdrop');
 let modalHeader = document.querySelector('#modal h3');
+let modalMsg = document.querySelector('.message');
 
 // knappar
 let queueBtn = document.querySelector('#queue-btn');
@@ -28,7 +35,8 @@ let queueArray = [];
 
 tables.forEach(table => {
     table.addEventListener('click', (e) => {
-        e.target.focus();
+        tables.forEach(table => {table.classList.remove('focus');});
+        e.target.classList.add('focus');
         selectedTable = e.target.textContent.split(' ').shift();
         showActionBar(e.target.classList.contains('booked'));
     });
@@ -42,6 +50,8 @@ function showActionBar(booked) {
     avbrytBtn.appendChild(avbrytTextNode);
     actionbar.appendChild(avbrytBtn);
     avbrytBtn.addEventListener('click', () => {
+        tables.forEach(table => {table.classList.remove('focus');});
+        selectedTable = 0;
         actionbar.innerHTML = "";
         actionbar.insertAdjacentHTML('beforeend', '<p class="instruction">Tryck på ett bord för att boka/avboka</p>');
     });
@@ -53,8 +63,11 @@ function showActionBar(booked) {
         avbokaBtn.appendChild(avbokaTextNode);
         actionbar.appendChild(avbokaBtn);
         avbokaBtn.addEventListener('click', () => {
-            // kör kod för avbokning av bord
-            console.log("avboka clicked!");
+            let table = tables[selectedTable-1];
+            let tableStatus = table.children[0].children[2];
+            table.classList.remove('booked');
+            tableStatus.textContent = "Obokat";
+            showActionBar(false);
         });
     } else {
         let bokaBtn = document.createElement('div');
@@ -82,56 +95,58 @@ queueBtn.addEventListener('click', () => {
 // MODAL ACTIONS
 closeModalBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    nameInput.value = "";
+    peopleInput.value = "";
     modal.style.display = "none";
 });
 
 submitModalBtn.addEventListener('click', (e) => {
     e.preventDefault();
+    // Om validate form returnerar false, avbryt resten av koden i blocket med return
+    modalMsg.style.display = "none";
+    if (nameInput.value.length < 1) {
+        modalMsg.textContent = "Namn måste minst innehålla ett tecken";
+        modalMsg.style.display = "inline-block";
+        return;
+    } else if (peopleInput.value <= 0) {
+        modalMsg.textContent = "Det måste finnas minst en person";
+        modalMsg.style.display = "inline-block";
+        return;
+    }
 
     if (!queueModal) {
         // boka bord
+        let table = tables[selectedTable-1];
+        let tableStatus = table.children[0].children[2];
+        table.classList.add('booked');
+        tableStatus.textContent = "Bokat av " + nameInput.value;
+        showActionBar(true);
     } else {
         // lägg till i kö
         queueNum++;
         let name = nameInput.value;
         let count = peopleInput.value;
 
-        //SKISS
         let item = {
             "partyName": name,
             "partyCount": count
         }
         queueArray.push(item);
-        console.log(queueArray);
-        //SKISS
-        updateQueue();
-        
 
-        /* queueList.insertAdjacentHTML("beforeend", 
-        `<div class="queue-item">
-            <p>#${queueNum}</p>
-            <p>${name}</p>
-            <p>${count} personer</p>
-        </div>
-        `); */
+        updateQueue();
     }
+
+    nameInput.value = "";
+    peopleInput.value = "";
+    modal.style.display = "none";
 });
 
-// TA BORT KÖ ITEMS
-// items.forEach(item => {
-//     item.addEventListener('click', (e) => {
-//         //e.currentTarget.remove();
-//         let itemNum = e.currentTarget.children[0].textContent.split('#')[1];
-//         queueArray.splice(itemNum-1, itemNum-1);
-//         console.log("TA BORT KNAPP");
-//         console.log(queueArray);
-//         updateQueue();
-//     });
-// });
+function validateForm() {
+
+}
 
 function updateQueue() {
     // TA BORT ALLA ITEMS I DOMEN
-    // (Kankse ska vara annorlunda syntax?)
     queueList.innerHTML = "";
 
     // LOOPA IGENOM ARRAYEN OCH PRINTA UT VARJE ENSKILT ITEM TILL DOMEN
@@ -145,7 +160,6 @@ function updateQueue() {
             <p>${item.partyCount} personer</p>
         </div>
         `);
-        console.log(item);
     });
 
     // HÄMTA ALLA NYA ELEMENT FRÅN DOMEN
@@ -153,13 +167,21 @@ function updateQueue() {
 
     // TILLDELA EVENTLYSSNARE TILL ALLA ITEMS I DOMEN    
     items.forEach(item => {
-        item.addEventListener('click', (e) => {
-            //e.currentTarget.remove();
-            let itemNum = e.currentTarget.children[0].textContent.split('#')[1];
-            queueArray.splice(itemNum - 1, 1);
-            console.log("TA BORT KNAPP");
-            console.log(queueArray);
-            updateQueue();
+        let mouseDown = 0;
+        let mouseUp = 0;
+
+        item.addEventListener('mousedown', () => {
+            mouseDown = Date.now();
         });
-    }); //testa fall detta funkar, brb
+
+        item.addEventListener('mouseup', (e) => {
+            mouseUp = Date.now();
+            if((mouseUp-mouseDown) >= 1000) {
+                e.currentTarget.remove();
+                let itemNum = e.currentTarget.children[0].textContent.split('#')[1];
+                queueArray.splice(itemNum - 1, 1);
+                updateQueue();
+            }
+        });
+    });
 }
