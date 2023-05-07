@@ -98,23 +98,35 @@ closeModalBtn.addEventListener('click', (e) => {
     nameInput.value = "";
     peopleInput.value = "";
     modal.style.display = "none";
+    modalMsg.style.display = "none";
 });
 
 submitModalBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    // Om validate form returnerar false, avbryt resten av koden i blocket med return
+    
     modalMsg.style.display = "none";
-    if (nameInput.value.length < 1) {
-        modalMsg.textContent = "Namn måste minst innehålla ett tecken";
+    // formulär validering
+    if (nameInput.value.split(' ').join('').length < 1) {
+        modalMsg.textContent = "Namn fältet får inte vara tomt";
         modalMsg.style.display = "inline-block";
+        nameInput.focus();
         return;
     } else if (peopleInput.value <= 0) {
         modalMsg.textContent = "Det måste finnas minst en person";
         modalMsg.style.display = "inline-block";
+        peopleInput.focus();
         return;
     }
-
+    
     if (!queueModal) {
+        // formulär validering
+        if (Number(peopleInput.value) > tables[selectedTable-1].dataset.seats) {
+            modalMsg.textContent = "Antalet personer får inte överstiga antal platser";
+            modalMsg.style.display = "inline-block";
+            peopleInput.value = tables[selectedTable-1].dataset.seats;
+            peopleInput.focus();
+            return;
+        }
         // boka bord
         let table = tables[selectedTable-1];
         let tableStatus = table.children[0].children[2];
@@ -140,10 +152,6 @@ submitModalBtn.addEventListener('click', (e) => {
     peopleInput.value = "";
     modal.style.display = "none";
 });
-
-function validateForm() {
-
-}
 
 function updateQueue() {
     // TA BORT ALLA ITEMS I DOMEN
