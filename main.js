@@ -1,9 +1,3 @@
-/** 
- * DVGA11 - Laboration 2
- * Hasan Ali
- * Daniel de Bruin
-*/
-
 let tables = document.querySelectorAll('.table');
 let actionbar = document.querySelector('.actionbar');
 
